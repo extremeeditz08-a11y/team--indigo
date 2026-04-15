@@ -18,7 +18,7 @@ function setupCanvasSequence() {
     // Configure image sequence
     const frameCount = 80; // 000 to 079
     const currentFrame = index => (
-        `/hero/upscaled-video_000/upscaled-video_${index.toString().padStart(3, '0')}.jpg`
+        `${import.meta.env.BASE_URL}hero/upscaled-video_000/upscaled-video_${index.toString().padStart(3, '0')}.jpg`
     );
 
     const images = [];
