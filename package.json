@@ -1,0 +1,17 @@
+{
+  "name": "team-indigo",
+  "version": "1.0.0",
+  "description": "Team Indigo GGITS Website",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "Team Indigo",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.0.8"
+  }
+}
