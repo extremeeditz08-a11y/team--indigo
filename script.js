@@ -43,21 +43,28 @@ function setupCanvasSequence() {
     firstImage.src = currentFrame(0);
     images[0] = firstImage;
 
+    // Failsafe & Fast Load threshold
+    let preloaderDismissed = false;
+    const minFramesToLoad = 5; // Start website after 5 frames instead of 80 to load fast
+
     // Preload remaining images
     function checkDone() {
-        const progress = (loadedImages / frameCount) * 100;
-        loaderBar.style.width = `${progress}%`;
-        loaderText.innerText = `Loading Assets (${Math.floor(progress)}%)`;
-        
-        if (loadedImages >= frameCount) {
-            // Done loading
-            setTimeout(() => {
-                preloader.style.opacity = 0;
+        if (!preloaderDismissed) {
+            // We scale the progress bar up to minFramesToLoad as 100% for the user perception
+            const displayProgress = Math.min((loadedImages / minFramesToLoad) * 100, 100);
+            loaderBar.style.width = `${displayProgress}%`;
+            loaderText.innerText = `Loading Assets (${Math.floor(displayProgress)}%)`;
+            
+            if (loadedImages >= minFramesToLoad) {
+                preloaderDismissed = true;
                 setTimeout(() => {
-                    preloader.style.display = "none";
-                    initAnimations(); // Fire off reveal animations
-                }, 800);
-            }, 500);
+                    preloader.style.opacity = 0;
+                    setTimeout(() => {
+                        preloader.style.display = "none";
+                        initAnimations(); // Fire off reveal animations
+                    }, 800);
+                }, 200);
+            }
         }
     }
 
@@ -77,16 +84,17 @@ function setupCanvasSequence() {
         };
     }
 
-    // Failsafe: Hide preloader after 5 seconds automatically
+    // Failsafe: Hide preloader after 3 seconds maximum
     setTimeout(() => {
-        if (preloader.style.display !== "none") {
+        if (!preloaderDismissed) {
+            preloaderDismissed = true;
             preloader.style.opacity = 0;
             setTimeout(() => {
                 preloader.style.display = "none";
                 initAnimations();
             }, 800);
         }
-    }, 5000);
+    }, 3000);
 
     // Draw the image filling the canvas (cover)
     function render() {
