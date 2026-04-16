@@ -197,6 +197,38 @@ function initAnimations() {
         });
     });
 
+    // Horizontal Scroll for Team Section
+    const teamTrack = document.querySelector('.team-scroll-track');
+    const teamContainer = document.querySelector('.team-scroll-container');
+    
+    if (teamTrack && teamContainer && !isMobile) {
+        // Calculate the total horizontal tracking distance 
+        const getScrollAmount = () => -(teamTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.1); 
+        
+        const teamTween = gsap.to(teamTrack, {
+            x: getScrollAmount,
+            ease: "none"
+        });
+        
+        ScrollTrigger.create({
+            trigger: teamContainer,
+            start: "center center",
+            end: () => `+=${getScrollAmount() * -1}`,
+            pin: true,
+            animation: teamTween,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            anticipatePin: 1
+        });
+    } else if (teamTrack && isMobile) {
+        // Mobile fallback -> simple overflow scroll
+        teamContainer.style.height = 'auto';
+        teamContainer.style.padding = '40px 20px';
+        teamTrack.style.overflowX = 'auto';
+        teamTrack.style.paddingRight = '20px';
+        teamTrack.classList.add('hide-scrollbar');
+    }
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
