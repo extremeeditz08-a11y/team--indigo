@@ -17,8 +17,9 @@ function setupCanvasSequence() {
 
     // Configure image sequence
     const frameCount = 80; // 000 to 079
+    const baseUrl = import.meta.env.BASE_URL || '/';
     const currentFrame = index => (
-        `hero/upscaled-video_000/upscaled-video_${index.toString().padStart(3, '0')}.jpg`
+        `${baseUrl}hero/upscaled-video_000/upscaled-video_${index.toString().padStart(3, '0')}.jpg`
     );
 
     const images = [];
@@ -38,33 +39,23 @@ function setupCanvasSequence() {
         render();
     }
 
-    // Load first image immediately to define size and clear state
-    const firstImage = new Image();
-    firstImage.src = currentFrame(0);
-    images[0] = firstImage;
-
     // Failsafe & Fast Load threshold
     let preloaderDismissed = false;
-    const minFramesToLoad = 5; // Start website after 5 frames instead of 80 to load fast
 
     // Preload remaining images
     function checkDone() {
-        if (!preloaderDismissed) {
-            // We scale the progress bar up to minFramesToLoad as 100% for the user perception
-            const displayProgress = Math.min((loadedImages / minFramesToLoad) * 100, 100);
-            loaderBar.style.width = `${displayProgress}%`;
-            loaderText.innerText = `Loading Assets (${Math.floor(displayProgress)}%)`;
+        if (!preloaderDismissed && loadedImages >= 1) {
+            preloaderDismissed = true;
+            loaderBar.style.width = `100%`;
+            loaderText.innerText = `Ready!`;
             
-            if (loadedImages >= minFramesToLoad) {
-                preloaderDismissed = true;
+            setTimeout(() => {
+                preloader.style.opacity = 0;
                 setTimeout(() => {
-                    preloader.style.opacity = 0;
-                    setTimeout(() => {
-                        preloader.style.display = "none";
-                        initAnimations(); // Fire off reveal animations
-                    }, 800);
-                }, 200);
-            }
+                    preloader.style.display = "none";
+                    initAnimations(); // Fire off reveal animations
+                }, 600);
+            }, 100);
         }
     }
 
@@ -78,13 +69,13 @@ function setupCanvasSequence() {
             checkDone();
         };
         img.onerror = () => {
-            console.error("Failed to load frame " + i);
+            console.error("Failed to load frame " + i, img.src);
             loadedImages++;
             checkDone();
         };
     }
 
-    // Failsafe: Hide preloader after 3 seconds maximum
+    // Failsafe: Hide preloader after 2 seconds maximum regardless
     setTimeout(() => {
         if (!preloaderDismissed) {
             preloaderDismissed = true;
@@ -92,9 +83,9 @@ function setupCanvasSequence() {
             setTimeout(() => {
                 preloader.style.display = "none";
                 initAnimations();
-            }, 800);
+            }, 600);
         }
-    }, 3000);
+    }, 2000);
 
     // Draw the image filling the canvas (cover)
     function render() {
