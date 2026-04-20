@@ -102,11 +102,14 @@ body {
     text-align: center;
 }
 
-/* The "World" of members */
+/* The "Precious Grid" layout */
 .team-cluster {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 80px 40px;
+    justify-items: center;
+    padding-top: 60px;
     position: relative;
-    min-height: 150vh;
-    width: 100%;
 }
 
 .member-card {
@@ -177,15 +180,41 @@ body {
     transform: translateY(0);
 }
 
-/* Floating Effects Positions - Refined for better visibility and flow */
-.m-1 { top: 2%; left: 3%; }
-.m-2 { top: 10%; right: 3%; width: 320px; }
-.m-3 { top: 30%; left: 15%; width: 400px; }
-.m-4 { top: 48%; right: 10%; }
-.m-5 { top: 72%; left: 3%; width: 340px; }
-.m-6 { top: 80%; right: 3%; width: 340px; }
-.m-7 { top: 100%; left: 12%; width: 360px; }
-.m-8 { top: 118%; right: 18%; width: 360px; }
+/* Mascot Characters */
+.mascot {
+    position: absolute;
+    width: 250px;
+    pointer-events: none;
+    mix-blend-mode: screen; /* Removes the black background */
+    z-index: 60;
+    filter: drop-shadow(0 0 20px rgba(157, 80, 187, 0.4));
+    will-change: transform;
+}
+
+.mascot.robot {
+    top: -120px;
+    right: -80px;
+}
+
+.mascot.spirit {
+    bottom: -100px;
+    left: -100px;
+    width: 220px;
+    transform: scaleX(-1); /* Facing the cards */
+}
+
+/* Precious Card Enhancements */
+.member-card {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0;
+}
+
+/* Stagger every other item in the grid for unique look */
+.team-cluster > .member-card:nth-child(even) {
+    margin-top: 80px;
+}
 
 /* Modal / Spotlight */
 .member-modal {
@@ -244,11 +273,12 @@ body {
         min-height: auto;
     }
     .member-card {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        width: 100% !important;
-        max-width: 400px;
+        margin-top: 0 !important; /* Remove stagger on mobile */
+    }
+    .team-cluster > .member-card:nth-child(even) {
+        margin-top: 0;
+    }
+    .mascot {
+        width: 150px;
     }
 }

@@ -103,14 +103,35 @@ function initAnimations() {
             ease: "power3.out"
         });
 
-        // Drift / Floating Motion (Organic feel)
+        // Drift / Floating Motion (Precious Grid feel)
         gsap.to(card, {
-            y: "-=30",
-            x: index % 2 === 0 ? "+=20" : "-=20",
+            y: "-=20",
             duration: 4 + Math.random() * 2,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
+        });
+    });
+
+    // Mascot animations
+    const mascots = document.querySelectorAll('.mascot');
+    mascots.forEach((mascot, index) => {
+        gsap.from(mascot, {
+            scale: 0,
+            opacity: 0,
+            duration: 1,
+            delay: 1.5 + (index * 0.2),
+            ease: "back.out(1.7)"
+        });
+
+        gsap.to(mascot, {
+            y: "-=15",
+            rotation: index % 2 === 0 ? 3 : -3,
+            duration: 2 + Math.random(),
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 2.5
         });
     });
 
