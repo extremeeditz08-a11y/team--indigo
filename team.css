@@ -1,0 +1,253 @@
+:root {
+    --bg-deep: #05070a;
+    --bg-indigo: #0a0e17;
+    --gold: #ffcf4b;
+    --neon-purple: #9d50bb;
+    --neon-violet: #6e48aa;
+    --text-white: #ffffff;
+    --text-dim: rgba(255, 255, 255, 0.6);
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text-white);
+    overflow-x: hidden;
+    min-height: 200vh;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+}
+
+/* Canvas Background */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+/* Hero Section */
+.team-hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+}
+
+.hero-title-container {
+    overflow: hidden;
+}
+
+.team-hero h1 {
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff 0%, var(--neon-purple) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+.team-hero p {
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0;
+}
+
+/* Layout - Organic Cluster */
+.team-container {
+    padding: 100px 5vw;
+    position: relative;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.team-section-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin-bottom: 60px;
+    display: block;
+    text-align: center;
+}
+
+/* The "World" of members */
+.team-cluster {
+    position: relative;
+    min-height: 150vh;
+    width: 100%;
+}
+
+.member-card {
+    position: absolute;
+    width: 320px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform;
+}
+
+.member-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(157, 80, 187, 0.2);
+}
+
+.member-img-wrapper {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.member-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.member-card:hover .member-img-wrapper img {
+    transform: scale(1.1);
+}
+
+.member-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.member-info span {
+    font-size: 0.85rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.member-tagline {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(10px);
+}
+
+.member-card:hover .member-tagline {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Floating Effects Positions (to be handled by JS more dynamically, but base classes help) */
+.m-1 { top: 0; left: 10%; }
+.m-2 { top: 15%; right: 10%; width: 280px; }
+.m-3 { top: 35%; left: 15%; width: 350px; }
+.m-4 { top: 50%; right: 15%; }
+.m-5 { top: 70%; left: 10%; width: 300px; }
+.m-6 { top: 80%; right: 20%; }
+.m-7 { top: 95%; left: 25%; }
+.m-8 { top: 110%; right: 30%; }
+
+/* Modal / Spotlight */
+.member-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 7, 10, 0.95);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content {
+    max-width: 900px;
+    width: 90%;
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+}
+
+.modal-img {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Glow effects */
+.glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(157, 80, 187, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .team-cluster {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        min-height: auto;
+    }
+    .member-card {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        max-width: 400px;
+    }
+}

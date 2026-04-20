@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Minds - Team Indigo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="team.css">
+</head>
+<body>
+
+    <div class="custom-cursor"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav style="position: fixed; top: 0; width: 100%; padding: 40px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: difference;">
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 1.2rem; font-weight: 700;">INDIGO.</a>
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Back to Home</a>
+    </nav>
+
+    <!-- Hero -->
+    <header class="team-hero">
+        <div class="hero-title-container">
+            <h1 id="hero-title">Meet the Creative <br> Minds</h1>
+        </div>
+        <p id="hero-tag">Architects of Experiences</p>
+        <div class="glow" style="top: 20%; left: 30%;"></div>
+    </header>
+
+    <main class="team-container">
+        
+        <span class="team-section-label">Leadership & Strategy</span>
+        
+        <div class="team-cluster">
+            <!-- Leadership -->
+            <div class="member-card m-1" data-parallax="0.1">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/aaditya.jpg" alt="Aaditya Chhipa">
+                </div>
+                <div class="member-info">
+                    <span>Core Lead</span>
+                    <h3>Aaditya Chhipa</h3>
+                    <p class="member-tagline">"Defining the vision, one event at a time."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-2" data-parallax="0.15">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/ujjwal.jpg" alt="Ujjwal Singh">
+                </div>
+                <div class="member-info">
+                    <span>Core Lead</span>
+                    <h3>Ujjwal Singh</h3>
+                    <p class="member-tagline">"Mastering the art of seamless execution."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-3" data-parallax="0.08">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/ayush.jpg" alt="Ayush Pandey">
+                </div>
+                <div class="member-info">
+                    <span>Core Lead</span>
+                    <h3>Ayush Pandey</h3>
+                    <p class="member-tagline">"Innovating with every interaction."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-4" data-parallax="0.2">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/anushka.jpg" alt="Anushka Bondre">
+                </div>
+                <div class="member-info">
+                    <span>Core Lead</span>
+                    <h3>Anushka Bondre</h3>
+                    <p class="member-tagline">"Elevating the standard of Indigo."</p>
+                </div>
+            </div>
+
+            <div class="glow" style="top: 40%; right: 10%;"></div>
+
+            <!-- Management -->
+            <div class="team-section-label" style="position: absolute; top: 75%; left: 50%; transform: translateX(-50%);">Experimental & Ops</div>
+
+            <div class="member-card m-5" data-parallax="0.12">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/3 indigo.jpeg" alt="Siddharth Nema">
+                </div>
+                <div class="member-info">
+                    <span>Senior Event Manager</span>
+                    <h3>Siddharth Nema</h3>
+                    <p class="member-tagline">"Orchestrating large-scale magic."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-6" data-parallax="0.18">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/2 indigo.jpeg" alt="Kanchi Mishra">
+                </div>
+                <div class="member-info">
+                    <span>Junior Event Manager</span>
+                    <h3>Kanchi Mishra</h3>
+                    <p class="member-tagline">"Ensuring every detail sparkles."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-7" data-parallax="0.05">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/1 INDIGO.jpeg" alt="Swati Rawat">
+                </div>
+                <div class="member-info">
+                    <span>Junior Event Manager</span>
+                    <h3>Swati Rawat</h3>
+                    <p class="member-tagline">"Fueling events with pure energy."</p>
+                </div>
+            </div>
+
+            <div class="member-card m-8" data-parallax="0.25">
+                <div class="member-img-wrapper">
+                    <img src="public/assets/4 indigo.jpeg" alt="Bhavya Upadhyay">
+                </div>
+                <div class="member-info">
+                    <span>Junior Event Manager</span>
+                    <h3>Bhavya Upadhyay</h3>
+                    <p class="member-tagline">"Crafting the next generation of experiences."</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 100px 20px; text-align: center; color: var(--text-dim); font-size: 0.9rem; border-top: 1px solid var(--glass-border);">
+        &copy; 2024 Team Indigo. Immersive Experience Designer.
+    </footer>
+
+    <!-- GSAP & Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="team.js"></script>
+</body>
+</html>
