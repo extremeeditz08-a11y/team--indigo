@@ -113,27 +113,7 @@ function initAnimations() {
         });
     });
 
-    // Mascot animations
-    const mascots = document.querySelectorAll('.mascot');
-    mascots.forEach((mascot, index) => {
-        gsap.from(mascot, {
-            scale: 0,
-            opacity: 0,
-            duration: 1,
-            delay: 1.5 + (index * 0.2),
-            ease: "back.out(1.7)"
-        });
 
-        gsap.to(mascot, {
-            y: "-=15",
-            rotation: index % 2 === 0 ? 3 : -3,
-            duration: 2 + Math.random(),
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: 2.5
-        });
-    });
 
     // Mouse Parallax for Cluster
     window.addEventListener('mousemove', (e) => {

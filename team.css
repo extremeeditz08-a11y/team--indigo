@@ -180,28 +180,7 @@ body {
     transform: translateY(0);
 }
 
-/* Mascot Characters */
-.mascot {
-    position: absolute;
-    width: 250px;
-    pointer-events: none;
-    mix-blend-mode: screen; /* Removes the black background */
-    z-index: 60;
-    filter: drop-shadow(0 0 20px rgba(157, 80, 187, 0.4));
-    will-change: transform;
-}
 
-.mascot.robot {
-    top: -120px;
-    right: -80px;
-}
-
-.mascot.spirit {
-    bottom: -100px;
-    left: -100px;
-    width: 220px;
-    transform: scaleX(-1); /* Facing the cards */
-}
 
 /* Precious Card Enhancements */
 .member-card {
