@@ -111,12 +111,12 @@ body {
 
 .member-card {
     position: absolute;
-    width: 320px;
+    width: 380px; /* Increased width to prevent name clipping */
     background: var(--glass);
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
-    padding: 20px;
+    padding: 24px;
     cursor: pointer;
     transition: border-color 0.4s ease, box-shadow 0.4s ease;
     will-change: transform;
@@ -125,6 +125,7 @@ body {
 .member-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(157, 80, 187, 0.2);
+    z-index: 50;
 }
 
 .member-img-wrapper {
@@ -176,15 +177,15 @@ body {
     transform: translateY(0);
 }
 
-/* Floating Effects Positions (to be handled by JS more dynamically, but base classes help) */
-.m-1 { top: 0; left: 10%; }
-.m-2 { top: 15%; right: 10%; width: 280px; }
-.m-3 { top: 35%; left: 15%; width: 350px; }
-.m-4 { top: 50%; right: 15%; }
-.m-5 { top: 70%; left: 10%; width: 300px; }
-.m-6 { top: 80%; right: 20%; }
-.m-7 { top: 95%; left: 25%; }
-.m-8 { top: 110%; right: 30%; }
+/* Floating Effects Positions - Refined for better visibility and flow */
+.m-1 { top: 2%; left: 3%; }
+.m-2 { top: 10%; right: 3%; width: 320px; }
+.m-3 { top: 30%; left: 15%; width: 400px; }
+.m-4 { top: 48%; right: 10%; }
+.m-5 { top: 72%; left: 3%; width: 340px; }
+.m-6 { top: 80%; right: 3%; width: 340px; }
+.m-7 { top: 100%; left: 12%; width: 360px; }
+.m-8 { top: 118%; right: 18%; width: 360px; }
 
 /* Modal / Spotlight */
 .member-modal {
