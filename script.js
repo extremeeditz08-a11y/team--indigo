@@ -42,8 +42,13 @@ function setupCanvasSequence() {
     // Failsafe & Fast Load threshold
     let preloaderDismissed = false;
 
-    // Preload remaining images
+    // Check if we should dismiss preloader
     function checkDone() {
+        // Update progress bar
+        const pct = Math.round((loadedImages / frameCount) * 100);
+        loaderBar.style.width = `${pct}%`;
+        loaderText.innerText = `Loading Assets (${pct}%)`;
+
         if (!preloaderDismissed && loadedImages >= 1) {
             preloaderDismissed = true;
             loaderBar.style.width = `100%`;
@@ -53,9 +58,9 @@ function setupCanvasSequence() {
                 preloader.style.opacity = 0;
                 setTimeout(() => {
                     preloader.style.display = "none";
-                    initAnimations(); // Fire off reveal animations
+                    initAnimations(images, imageSeq, render); // Fire off all animations
                 }, 600);
-            }, 100);
+            }, 300);
         }
     }
 
@@ -75,55 +80,65 @@ function setupCanvasSequence() {
         };
     }
 
-    // Failsafe: Hide preloader after 2 seconds maximum regardless
+    // Failsafe: Hide preloader after 2.5 seconds maximum regardless
     setTimeout(() => {
         if (!preloaderDismissed) {
             preloaderDismissed = true;
             preloader.style.opacity = 0;
             setTimeout(() => {
                 preloader.style.display = "none";
-                initAnimations();
+                initAnimations(images, imageSeq, render);
             }, 600);
         }
-    }, 2000);
+    }, 2500);
 
     // Draw the image filling the canvas (cover)
     function render() {
-        if (!images[Math.round(imageSeq.frame)]) return;
+        const frameIndex = Math.round(imageSeq.frame);
+        if (!images[frameIndex]) return;
         
-        const img = images[Math.round(imageSeq.frame)];
-        if (!img.complete) return;
+        const img = images[frameIndex];
+        if (!img.complete || img.naturalWidth === 0) return;
 
         // Calculate aspect ratio cover logic
-        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+        const x = (canvas.width / 2) - (img.naturalWidth / 2) * scale;
+        const y = (canvas.height / 2) - (img.naturalHeight / 2) * scale;
         
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(img, x, y, img.width * scale, img.height * scale);
+        context.drawImage(img, x, y, img.naturalWidth * scale, img.naturalHeight * scale);
     }
-
-    images[0].onload = render;
 
     // Handle Resize
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
+}
+
+function initAnimations(images, imageSeq, render) {
+    // Check for reduced motion or very small screens to simplify
+    const isMobile = window.innerWidth < 768;
+    const scrollEase = isMobile ? "power1.out" : "power3.out";
+    const canvas = document.getElementById("hero-canvas");
+
+    // Force ScrollTrigger to recalculate now that preloader is gone
+    ScrollTrigger.refresh();
 
     // GSAP ScrollTrigger timeline for Hero Canvas
     const heroTl = gsap.timeline({
         scrollTrigger: {
             trigger: ".hero",
             start: "top top",
-            end: "bottom top", 
+            end: "+=300%",   // 3x viewport height of scroll for 80 frames
             pin: true,
             scrub: 1, 
-            anticipatePin: 1
+            anticipatePin: 1,
+            invalidateOnRefresh: true
         }
     });
 
     // Animate frames 0 -> 79
     heroTl.to(imageSeq, {
-        frame: frameCount - 1,
+        frame: images.length - 1,
         snap: "frame",
         ease: "none",
         onUpdate: render
@@ -132,7 +147,7 @@ function setupCanvasSequence() {
     // Ensure canvas stays centered during scale
     gsap.set(canvas, { transformOrigin: "center center" });
 
-    // Improved zoom-out effect (starts slightly zoomed in, ends at full screen)
+    // Zoom-out effect (starts slightly zoomed in, ends at full screen)
     heroTl.fromTo(canvas, 
         { scale: 1.15 }, 
         { scale: 1, ease: "none" }, 
@@ -145,18 +160,11 @@ function setupCanvasSequence() {
         duration: 0.4
     }, 0);
 
-    // Fade out canvas container exactly as the next section starts to overlay
+    // Fade out canvas container as next section overlays
     heroTl.to(".canvas-container", {
         opacity: 0,
         duration: 0.3
     }, 0.7); 
-
-}
-
-function initAnimations() {
-    // Check for reduced motion or very small screens to simplify
-    const isMobile = window.innerWidth < 768;
-    const scrollEase = isMobile ? "power1.out" : "power3.out";
 
     // Basic View Reveal Animations
     const animElements = document.querySelectorAll('.view-anim');
